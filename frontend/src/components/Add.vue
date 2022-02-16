@@ -59,7 +59,6 @@ export default {
   },
   methods: {
     upload (e) {
-      this.$refs.alert.showAlert('提交成功')
       let file = e.target.files[0]
       this.form.qrcode = file ? {
         name: file.name,
@@ -71,9 +70,9 @@ export default {
       formData.append('subject', this.form.subject)
       formData.append('number', this.form.number)
       formData.append('qrcode', this.form.qrcode.file, this.form.qrcode.name)
-      this.$request.post('http://localhost:3000', formData, {
+      this.$request.post('/', formData, {
         headers: { 'content-type': 'multipart/form-data' }
-      })
+      }).then((response) => { console.log(response) })
       this.form = JSON.parse(JSON.stringify(INITIAL_DATA))
       this.$refs.alert.showAlert('提交成功')
     }
